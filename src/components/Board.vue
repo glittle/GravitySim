@@ -1,5 +1,10 @@
 <template>
-  <div class="Board">Board</div>
+  <div class="Board">
+    <large-particle></large-particle>
+    <small-particle v-for="n in smallParticleIds"
+    :id="n"
+    :key="n"></small-particle>
+  </div>
 </template>
 
 <script>
@@ -10,8 +15,8 @@ http://iwant2study.org/lookangejss/03thermalphysics_08kineticmodel/ejss_model_br
 
 
 */
-import SmallParticle from "./components/SmallParticle.vue";
-import LargeParticle from "./components/LargeParticle.vue";
+import SmallParticle from "./SmallParticle.vue";
+import LargeParticle from "./LargeParticle.vue";
 
 export default {
   name: "Board",
@@ -30,6 +35,9 @@ export default {
     shared: function () {
       return this.$root.shared;
     },
+    smallParticleIds(){
+      return this.shared.ID.slice(1);
+    }
   },
   created() {
     this.shared.$on("doStep", this.doStep);
@@ -68,7 +76,7 @@ export default {
           0.5 * S.diameter[i] +
           (S.ymax - S.ymin - S.diameter[i]) * Math.random();
         S.vy[i] = S.vmax * (Math.random() - 0.5);
-      }
+     }
 
       for (i = 0; i < S.nv; i++) {
         S.ID[i] = i;

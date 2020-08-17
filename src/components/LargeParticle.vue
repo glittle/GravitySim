@@ -6,7 +6,7 @@
 export default {
   name: "LargeParticle",
   props: {
-    msg: String,
+    id: Number,
   },
    data() {
     return {

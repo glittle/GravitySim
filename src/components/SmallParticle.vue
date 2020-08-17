@@ -1,6 +1,6 @@
 <template>
   <div class="Small">
-  
+  {{id}} ({{x}}, {{y}})
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
   name: 'SmallParticle',
   props: {
-    msg: String
+    id: Number
   },
    data() {
     return {
@@ -18,6 +18,12 @@ export default {
   computed: {
     shared: function () {
       return this.$root.shared;
+    },
+    x(){
+      return this.shared.x[this.id];
+    },
+    y(){
+      return this.shared.y[this.id];
     }
   },
 }
