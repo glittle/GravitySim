@@ -9,7 +9,17 @@ export default {
   name: 'SmallParticle',
   props: {
     msg: String
-  }
+  },
+   data() {
+    return {
+      
+    }
+  },
+  computed: {
+    shared: function () {
+      return this.$root.shared;
+    }
+  },
 }
 </script>
 

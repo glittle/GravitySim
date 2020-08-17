@@ -1,8 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
 
-Vue.config.productionTip = false
+import _shared from "./Shared.js";
+
+Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  computed: {
+    shared() {
+      return _shared;
+    },
+  },
+  render: (h) => h(App),
+}).$mount("#app");
