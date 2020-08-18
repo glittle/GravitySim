@@ -7,16 +7,15 @@
 </template>
 
 <script>
-import particleMixin from './particleMixin';
+import particleMixin from "./particleMixin";
 
 export default {
   name: "LargeParticle",
-  mixins:[particleMixin],
+  mixins: [particleMixin],
   data() {
     return {};
   },
-  computed: {
-  },
+  computed: {},
 };
 </script>
 
@@ -24,6 +23,9 @@ export default {
 <style lang="scss">
 .Large {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   font-size: 15px;
   text-align: center;
   font-weight: bold;

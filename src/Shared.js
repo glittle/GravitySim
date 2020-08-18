@@ -14,14 +14,16 @@ all the rest are the small objects
     sizeSmall: 5, // actual dimensions of small particles
     sizeLarge: 100, // 1-10 // sizeSmall of large particle
 
+    velocity: 2,
+
     xmin: 0, // min x coord
     xmax: 600, // max x coord
     ymin: 0, // min y coord
     ymax: 600, // max y coord
 
     t: 0, // time
-    timeDelay: 250, // ms per tick
-    dt: 0.1, // time increment
+    timeDelay: 500, // ms per tick
+    dt: 0.1, // time increment - does this matter?
 
     ep: 1, // restitution coefficient for the collision with the walls
     // ep - 0,0.5,1 // coefficient of resititution between particle and wall
@@ -107,8 +109,7 @@ for ( i=1, i<n, i++) {
   },
   computed: {
     vmax() {
-      var velocity = 10;
-      return this.sizeSmall * 2 + velocity;
+      return this.sizeSmall * 2 + this.velocity;
     },
   },
   methods: {

@@ -25,10 +25,9 @@ body{
   padding: 0;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   height: 100vh;
   display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  //justify-content: space-between;
+  //align-items: stretch;
 }
 </style>
