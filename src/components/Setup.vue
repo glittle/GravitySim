@@ -2,10 +2,12 @@
   <div class="Setup">
     Setup
     <div>t = {{shared.t}}</div>
-    <div>x,y[1] = {{shared.x[1]}},{{shared.y[1]}}</div>
-    <div>x,y[10] = {{shared.x[10]}},{{shared.y[10]}}</div>
+    <div>x,y[1] = {{shared.showNum('x', 1)}},{{shared.showNum('y', 1)}}</div>
+    <div>vx,vy[1] = {{shared.showNum('vx', 1)}},{{shared.showNum('vy', 1)}}</div>
     <p>
       <button @click="toggleRun" v-text="running ? 'Stop' : 'Start'"></button>
+      &nbsp;
+      <button @click="step" v-if="!running" v-text="'Step'"></button>
     </p>
     <p>
       <button @click="reset" v-text="'Reset'"></button>
@@ -40,6 +42,9 @@ export default {
           this.shared.$emit("doStep");
         }, this.shared.timeDelay);
       }
+    },
+    step() {
+      this.shared.$emit("doStep");
     },
     reset() {
       this.toggleRun(false);

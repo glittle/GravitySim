@@ -1,9 +1,7 @@
 <template>
-  <div class="Board">
-    <large-particle></large-particle>
-    <small-particle v-for="n in smallParticleIds"
-    :id="n"
-    :key="n"></small-particle>
+  <div class="Board" :style="{width: width, height: height}">
+    <large-particle v-for="n in largeParticleIds" :id="n" :key="n"></large-particle>
+    <small-particle v-for="n in smallParticleIds" :id="n" :key="n"></small-particle>
   </div>
 </template>
 
@@ -35,9 +33,18 @@ export default {
     shared: function () {
       return this.$root.shared;
     },
-    smallParticleIds(){
-      return this.shared.ID.slice(1);
-    }
+    width() {
+      return this.shared.xmax + "px";
+    },
+    height() {
+      return this.shared.ymax + "px";
+    },
+    smallParticleIds() {
+      return this.shared.x.map((p, i) => i).slice(this.shared.numLarge);
+    },
+    largeParticleIds() {
+      return this.shared.x.map((p, i) => i).slice(0, this.shared.numLarge);
+    },
   },
   created() {
     this.shared.$on("doStep", this.doStep);
@@ -47,102 +54,157 @@ export default {
   },
   methods: {
     doStep() {
+      var vue = this;
       var S = this.shared;
-      const r = 1000;
+      var r = 1000;
       S.t = Math.round(r * (S.t + S.dt)) / r;
-      for (var i = 1; i < S.n; i++) {
-        S.x[i] = S.vx[i];
-        S.y[i] = S.vy[i];
-        S.vx[i] = i === 0 ? S.b * S.vx[0] : 0;
-        S.vy[i] = i === 0 ? S.b * S.vy[0] : 0;
+
+      for (var i = 0; i < S.numParticles; i++) {
+        vue.$set(S.x, i, S.x[i] + S.vx[i]);
+        vue.$set(S.y, i, S.y[i] + S.vy[i]);
+        // S.x[i] += S.vx[i];
+        // S.y[i] += S.vy[i];
+        //S.vx[i] = i === 0 ? S.b * S.vx[0] : 0;
+        //S.vy[i] = i === 0 ? S.b * S.vy[0] : 0;
       }
-    },
-    getA(i, a) {
-      return i === 0 ? this.shared.b * a[0] : 0;
+
+      this.main();
     },
     initialize() {
+      var vue = this;
       var S = this.shared;
-      this.setSize();
-      for (var i = 1; i < S.n; i++) {
-        S.diameter[i] = 0.2;
-        // Random initialization of the disks
-        S.x[i] =
-          S.xmin +
-          0.5 * S.diameter[i] +
-          (S.xmax - S.xmin - S.diameter[i]) * Math.random();
-        S.vx[i] = S.vmax * (Math.random() - 0.5);
-        S.y[i] =
-          S.ymin +
-          0.5 * S.diameter[i] +
-          (S.ymax - S.ymin - S.diameter[i]) * Math.random();
-        S.vy[i] = S.vmax * (Math.random() - 0.5);
-     }
+      var i;
 
-      for (i = 0; i < S.nv; i++) {
-        S.ID[i] = i;
-      }
+      // for (i = 0; i < S.nv; i++) {
+      //   vue.$set(S.ID, i, i);
+      // }
 
       S.t = 0;
 
-      S.vx[0] = S.vy[0] = 0;
-      S.x[0] = (S.xmax + S.xmin) / 2; // put large particle at the centre of screen
-      S.y[0] = (S.ymax + S.ymin) / 2;
-    },
-    setSize() {
-      var S = this.shared;
-      S.mass[0] = 2 * S.sizen * S.sizen; //*sizen; model used to determine the mass of particle 0
-      S.size = S.sizen * S.diameter[1];
-      S.diameter[0] = S.size;
-    },
-    vdistribution() {
-      var id;
-      var S = this.shared;
-      for (var i = 0; i < S.nv; i++) {
-        S.V[i] = 0;
+      // large
+      for (i = 0; i < S.numLarge; i++) {
+        vue.$set(S.diameter, i, S.sizeLarge);
+        vue.$set(S.mass, i, 2 * S.sizeLarge * S.sizeLarge); //*sizeLarge; model used to determine the mass of particle 0
+
+        // Random initialization of the disks
+        vue.$set(
+          S.x,
+          i,
+          (S.xmax * (i + 1)) / (S.numLarge + 1)
+          //  +
+          //   0.5 * S.diameter[i] +
+          //   (S.xmax / 3 - S.xmin - S.diameter[i]) * Math.random()
+        );
+        vue.$set(
+          S.y,
+          i,
+          (S.ymax * (i + 1)) / (S.numLarge + 1)
+          // S.ymax / 3 +
+          //   0.5 * S.diameter[i] +
+          //   (S.ymax / 3 - S.ymin - S.diameter[i]) * Math.random()
+        );
+        vue.$set(S.vx, i, 0); //S.vmax * (Math.random() * 0.1));
+        vue.$set(S.vy, i, 0); //S.vmax * (Math.random() * 0.1));
+        vue.$set(
+          S.color,
+          i,
+          `rgb(${Math.random() * 50},${Math.random() * 50},${
+            Math.random() * 50
+          })`
+        );
       }
-      for (i = 0; i < S.n; i++) {
-        id = (S.nv * Math.sqrt(S.vx[i] * S.vx[i] + S.vy[i] * S.vy[i])) / S.vmax; //(var)??
-        if (id > S.nv - 1) {
-          id = S.nv - 1;
-        }
-        S.V[id] += 1;
+
+      // small
+      for (i = S.numLarge; i < S.numParticles; i++) {
+        vue.$set(S.diameter, i, S.sizeSmall);
+        vue.$set(S.mass, i, 2 * S.sizeSmall * S.sizeSmall);
+        // Random initialization of the disks
+        vue.$set(
+          S.x,
+          i,
+          S.xmin +
+            0.5 * S.diameter[i] +
+            (S.xmax - S.xmin - S.diameter[i]) * Math.random()
+        );
+        vue.$set(
+          S.y,
+          i,
+          S.ymin +
+            0.5 * S.diameter[i] +
+            (S.ymax - S.ymin - S.diameter[i]) * Math.random()
+        );
+        vue.$set(
+          S.vx,
+          i,
+          S.vmax * (S.vmax * 0.5 * Math.random() - 0.5 * S.vmax)
+        );
+        vue.$set(
+          S.vy,
+          i,
+          S.vmax * (S.vmax * 0.5 * Math.random() - 0.5 * S.vmax)
+        );
+        vue.$set(
+          S.color,
+          i,
+          `rgb(${Math.random() * 150 + 50},${Math.random() * 150 + 50},${
+            Math.random() * 150 + 50
+          })`
+        );
       }
     },
-    collide(collision, collision2) {
+    // vdistribution() {
+    //   var id;
+    //   var vue = this;
+    //   var S = this.shared;
+    //   for (var i = 0; i < S.nv; i++) {
+    //     vue.$set(S.V, i, 0);
+    //   }
+    //   for (i = 0; i < S.numParticles; i++) {
+    //     id = (S.nv * Math.sqrt(S.vx[i] * S.vx[i] + S.vy[i] * S.vy[i])) / S.vmax; //(var)??
+    //     if (id > S.nv - 1) {
+    //       id = S.nv - 1;
+    //     }
+    //     vue.$set(S.V, id, S.v[id] + 1);
+    //   }
+    // },
+    collide(collision1, collision2) {
+      var vue = this;
       var S = this.shared;
-      var dx = S.x[collision2] - S.x[collision],
-        dy = S.y[collision2] - S.y[collision];
+      var dx = S.x[collision2] - S.x[collision1],
+        dy = S.y[collision2] - S.y[collision1];
       var distance = Math.sqrt(dx * dx + dy * dy);
       // Unit vector in the direction of the collision
       var ax = dx / distance,
         ay = dy / distance;
       // Projection of the velocities in these axes
-      var va1 = S.vx[collision] * ax + S.vy[collision] * ay,
-        vb1 = -S.vx[collision] * ay + S.vy[collision] * ax;
+      var va1 = S.vx[collision1] * ax + S.vy[collision1] * ay,
+        vb1 = -S.vx[collision1] * ay + S.vy[collision1] * ax;
       var va2 = S.vx[collision2] * ax + S.vy[collision2] * ay,
         vb2 = -S.vx[collision2] * ay + S.vy[collision2] * ax;
       // New velocities in these axes
       var vaP1 =
         va1 +
         ((1 + S.ed) * (va2 - va1)) /
-          (1 + S.mass[collision] / S.mass[collision2]);
+          (1 + S.mass[collision1] / S.mass[collision2]);
       var vaP2 =
         va2 +
         ((1 + S.ed) * (va1 - va2)) /
-          (1 + S.mass[collision2] / S.mass[collision]);
+          (1 + S.mass[collision2] / S.mass[collision1]);
       // Undo the projections
-      S.vx[collision] = vaP1 * ax - vb1 * ay;
-      S.vy[collision] = vaP1 * ay + vb1 * ax;
-      S.vx[collision2] = vaP2 * ax - vb2 * ay;
-      S.vy[collision2] = vaP2 * ay + vb2 * ax;
+      vue.$set(S.vx, collision1, vaP1 * ax - vb1 * ay);
+      vue.$set(S.vy, collision1, vaP1 * ay + vb1 * ax);
+      vue.$set(S.vx, collision2, vaP2 * ax - vb2 * ay);
+      vue.$set(S.vy, collision2, vaP2 * ay + vb2 * ax);
     },
     main() {
       var S = this.shared;
+      var vue = this;
 
       var min = 0;
 
-      for (var i = 1; i < S.n; i++) {
-        for (var j = 0; j < i; j++) {
+      for (var i = 0; i < S.numParticles; i++) {
+        for (var j = 0; j < S.numLarge; j++) {
+          if (i === j) continue;
           // dx is delta x
           // dy is delta y
           // dm is distance mean
@@ -156,7 +218,7 @@ export default {
             // dvy is delta vy
             var dvx = S.vx[j] - S.vx[i];
             var dvy = S.vy[j] - S.vy[i];
-            // way to check collision
+            // way to check collision1
             if (dx * dvx + dy * dvy < 0) {
               this.collide(i, j);
             }
@@ -171,45 +233,45 @@ export default {
       var r;
       var d;
 
-      for (i = 0; i < S.n; i++) {
+      for (i = 0; i < S.numParticles; i++) {
         // r is the radius
         r = S.diameter[i] / 2;
         // d is distance spacings between particle and bottom
         d = S.y[i] - S.ymin - r;
         if (S.vy[i] < 0 && d < min) {
-          S.vy[i] = -S.ep * S.vy[i];
+          vue.$set(S.vy, i, -S.ep * S.vy[i]);
         } // check bottom reverse vy
         // d is distance spacings between particle and top
         d = S.ymax - r - S.y[i]; // let d .....
         if (S.vy[i] > 0 && d < min) {
-          S.vy[i] = -S.ep * S.vy[i];
+          vue.$set(S.vy, i, -S.ep * S.vy[i]);
         } // check top reverse vy
         // d is distance spacings between particle and left
         d = S.x[i] - S.xmin - r; // d become ....
         if (S.vx[i] < 0 && d < min) {
-          S.vx[i] = -S.ep * S.vx[i];
+          vue.$set(S.vx, i, -S.ep * S.vx[i]);
         }
         // d is distance spacings between particle and right
         d = S.xmax - r - S.x[i];
         if (S.vx[i] > 0 && d < min) {
-          S.vx[i] = -S.ep * S.vx[i];
+          vue.$set(S.vx, i, -S.ep * S.vx[i]);
         }
 
-        // label for the mass introduced by wee
-        S.l_m[i] = "" + (i + 1);
-        S.speed[i] = Math.sqrt(S.vx[i] * S.vx[i] + S.vy[i] * S.vy[i]);
-        S.KE[i] = 0.5 * S.mass[i] * S.speed[i] * S.speed[i];
+        //S.l_m[i] = "" + (i + 1);
+        vue.$set(S.speed, i, Math.sqrt(S.vx[i] * S.vx[i] + S.vy[i] * S.vy[i]));
+        vue.$set(S.KE, i, 0.5 * S.mass[i] * S.speed[i] * S.speed[i]);
         S.TKE = S.TKE + S.KE[i];
-        S.MOM[i] = S.mass[i] * S.speed[i];
+        vue.$set(S.MOM, i, S.mass[i] * S.speed[i]);
         S.TMOM = S.TMOM + S.MOM[i];
       }
 
-      S.px = S.x[0]; //  what is px is particle coordinate of particle 0
-      S.py = S.y[0]; // what is py particle coordinate of particle 0
+      // S.px = S.x[0]; //  what is px is particle coordinate of particle 0
+      // S.py = S.y[0]; // what is py particle coordinate of particle 0
       // set
+      // ????
       for (var counter = 0; counter < S.m /* Iterations */; counter++) {
-        S.pxset[counter] = S.x[counter];
-        S.pyset[counter] = S.y[counter];
+        vue.$set(S.pxset, counter, S.x[counter]);
+        vue.$set(S.pyset, counter, S.y[counter]);
       }
     },
   },
@@ -220,7 +282,11 @@ export default {
 <style lang="scss">
 .Board {
   margin: 10px;
-  flex-grow: 2;
+  box-sizing: content;
   border: 5px double grey;
+
+  position: relative;
+
+  overflow: visible;
 }
 </style>
