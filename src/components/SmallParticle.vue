@@ -1,7 +1,7 @@
 <template>
   <div
     class="Small"
-    :title="'#' + id + ': ' + x + ',' + y"
+    :title="'#' + id + ': ' + x + ',' + y + '\nvx' + vx + ',' + vy"
     :style="{left:left, top:top, backgroundColor: color, color: color, width:diameter, height:diameter, transitionDuration: dur}"
   ></div>
 </template>

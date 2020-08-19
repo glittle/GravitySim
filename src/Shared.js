@@ -77,16 +77,16 @@ vmax:sizeSmall*2+8,
   }
 */
     //l_m: [], // array[n]
-    speed: [], // array[n]
-    KE: [], // array[n]
-    TKE: 0, // ??
-    MOM: [], // array[n]
-    TMOM: 0, // ??
+    // speed: [], // array[n]
+    // KE: [], // array[n]
+    // TKE: 0, // ?? // total kinetic engergy?
+    // MOM: [], // array[n]
+    // TMOM: 0, // ??  // total momentum?
     //TOLERANCE: 0.001, // tolerance for the collisions
-    horizontalRebound: true, // whether there was a rebound with a horizontal wall
+    // horizontalRebound: true, // whether there was a rebound with a horizontal wall
     //rebound: 0, // the disk that first rebounded with a wall
-    collision1: 0, // the disk that collided
-    collision2: 0, // the disk that collided
+    // collision1: 0, // the disk that collided
+    // collision2: 0, // the disk that collided
     // g: 0, //
     // showv: false, // show velocity
     //see: true, //

@@ -19,10 +19,10 @@ export default {
       return this.shared.color[this.id];
     },
     left() {
-      return this.shared.x[this.id] - this.radius + "px";
+      return (this.shared.x[this.id] - this.radius) + "px";
     },
     top() {
-      return this.shared.y[this.id] - this.radius + "px";
+      return (this.shared.y[this.id] - this.radius) + "px";
     },
     x() {
       return this.shared.showNum("x", this.id);
