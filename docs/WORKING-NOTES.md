@@ -4,6 +4,8 @@ These notes used to live in the Google Doc “[2020 - Thoughts](https://docs.goo
 
 The Google Drive folder “[Gravity - MetaResearch](https://drive.google.com/drive/folders/0B7rgLe43cmgtdXE1bVpSbm9acVE?resourcekey=0-f1sHpckCIEbgSBTkFLPZLA)” remains the archive for PDFs, HTML papers, and book scans. Do not move those binaries into git.
 
+Post-run lab writeups: [LABS.md](LABS.md).
+
 ## Main Ideas
 
 - Infinite scale
