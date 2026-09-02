@@ -88,6 +88,14 @@ Earned
 
 27. Origin-centered spawn at λ=24 (--mfp-ext-lcm-frozen-iso-lam24). Same rain as lab 26 (R_spawn=39.2, launch=39.7, 48e6×16, seed 1). The one change: λ=24 (lab 23's value, not scanned). τ(spawn→test)=1.654 (lab 26 was 0.165; lab 23 pair spawn was 0.321). Isolated |F|/err=1.65 (null). Rain arrived: n_test flat (5912 at d=5.5, 6022 at d=32), total 60764. τ=1.65 thinned rain (~4× below lab 26) but did not kill it. λ was not lowered. Classifier: other. χ²_1/d²=2.69 vs χ²_1/d=1.32 so 1/d² is not earned. F·d far/near=-0.05, not flat, so not 1/d. F far/near=-0.011 (vacuum 0.010, lab 23 0.336). d=32 is 0.05σ. Lab 23 was live there (F=1.65e-4). Five of ten points F>2σ. d=24 is a 3.1σ bump, not lab 23's monotonic live far field. First classifier stamp was slower-than-1/d²; that was a fallthrough. Far F had already died. Corrected label is other. Lab 23's slow fall was pair-mid spawn, not gap τ. Absolute F is smaller (e^{-τ} plus spawn area); normalization, not a law. Not a flatten. Results in results/mfp_ext_lcm_frozen_iso_lam24/. Labs 23-26 not overwritten.
 
+28. Two couplings on one unpacked LCM bath (--two-coupling). Not the hex disk. Two opaque MIs, r_mi=1, frozen uniform LCM at n=1.20, first hit only, origin-centered spawn (R_spawn=20, λ=240, τ_GCM spawn→test=0.085). Isolated (partner off, same bath, same spawn): |F|/err=1.32 (null after one 4×; 48e6 rays; n_MI=110291; frac_LCM=0.338). LCM-off pair leftover: 1/d² (χ² 1.88 vs 90.4). LCM-on: rain arrived (n_MI flat ~2.1e5 per d). Classifier: other. χ²_1/d²=22.1 is not ≪ χ²_1/d=41.9. F·d far/near=1.03, not a 1/d law. Far leftover did not die like vacuum: at d=16, F=2.73e-5 (10σ) vs LCM-off 3.37e-6 (~8×). F still live is not a flatten. Light on the same n: drain-from-rain (N_hits=1148 at s=40, ΔE/E0=0.205, E/E0→0.795), smear rms=0 by no-kick, Δt_obs/Δt_emit=1.000 at every s; rain-off ΔE=0 and stretch=1; τ_GCM on the light path=0.167. Two-coupling split not earned: light did its job; leftover did not stay vacuum 1/d². Thin τ let rain reach the MIs (not a same-τ starve). Hypothesis that small τ_GCM keeps leftover vacuum-like is discarded. Not a Hubble / SN / flatten fit. Results in results/two_coupling/. Labs 21–27 and tired-bath / tired-interval not overwritten.
+
+| d | F (LCM on) | F (LCM off) |
+| ---: | ---: | ---: |
+| 2.2 | 1.22e-4 | 1.27e-4 |
+| 6 | 2.52e-5 | 1.02e-5 |
+| 16 | 2.73e-5 (10σ) | 3.37e-6 |
+
 Not earned (still open, or parked on purpose)
 
 - SN time dilation. Lab 19: energy loss en route does not stretch the time between two crests if both travel at the LCM speed. A weeks-long pulse is a negligible fraction of λ_E, so chirp does not give (1+z). This is the hole. Do not add a clock well or c(E) just to make it sit.
@@ -97,6 +105,7 @@ Not earned (still open, or parked on purpose)
 - v(r) fit. Do not fit v(r). Do not fit Hubble. Do not fit a flatten.
 - A flattened rotation curve from finite GCM range. Two-body --mfp was shadow-fill. --mfp-lcm F-rise was a ball edge. --mfp-ext LCM-on is an optically thick wall (F=0). Vacuum hex-disk leftover is 1/d² when rain arrives (lab 21). Local LCM leftover stamped 1/d; 1/d is not earned. Frozen-bath leftover (lab 23) live-at-32 was pair-mid table spawn, not gap τ (lab 27: origin-centered, λ=24, far F died). Thin-gap origin-centered leftover (lab 26, λ=240) dies far like vacuum; 1/d² is a label, not a slam dunk. TVF flatten is not earned.
 - leftover becomes 1/d in LCM. Lab 22/23 stamps were pair-mid / growing-ball spawn. Origin-centered spawn (labs 26-27) does not give a 1/d law. Not earned.
+- Two-coupling split. Lab 28: light did its job on the same unpacked bath; leftover did not stay vacuum 1/d². Small τ_GCM does not keep leftover vacuum-like. Not earned.
 - An extended leftover-sourced atmosphere for light. Sourced n is a skin.
 - A sitting diffuse LCM halo. T = 0 packing is a crust; in 2D it blows off. Do not add T.
 - Charge, nuclei, electrons, magnetism. Leftover on overlapping clouds stays attractive. Packing does not reverse at contact.
@@ -104,7 +113,7 @@ Not earned (still open, or parked on purpose)
 
 Ontology that survived
 
-Force is leftover collisions of substance. Two media, two jobs: GCM leftover on opaque MI was 1/d² in vacuum; packing is crust or blow-off; tired light on unpacked background LCM. Heat from absorption is a feature. Drain needs rain and LCM. Empty space does not absorb. Rain hits an MI or it does not. Drain drops E and does not stretch Δt. A 12λ LCM box is a wall, not a galaxy. Vacuum leftover on an extended opaque mass is 1/d² when rain arrives. Isolated and the F(d) table must share spawn. Labs 23-24 isolated R=6 vs pair-mid table was a leftover-lab hole; lab 25 stopped on isolated 2.26; lab 26 at 4× rays isolated 0.66 (lab 25 was noise). Origin-centered leftover in an LCM bath dies far like vacuum at λ=240 (lab 26, label 1/d², not a slam dunk) and at λ=24 (lab 27, classifier other). Lab 23's live-at-32 slow fall was pair-mid spawn, not gap τ. Leftover-in-LCM as 1/d is not earned. TVF flatten is not earned. Light rides unpacked LCM. One optical depth still doing three jobs is a hole; leftover-packed n is not the light bath.
+Force is leftover collisions of substance. Two media, two jobs: GCM leftover on opaque MI was 1/d² in vacuum; packing is crust or blow-off; tired light on unpacked background LCM. Heat from absorption is a feature. Drain needs rain and LCM. Empty space does not absorb. Rain hits an MI or it does not. Drain drops E and does not stretch Δt. A 12λ LCM box is a wall, not a galaxy. Vacuum leftover on an extended opaque mass is 1/d² when rain arrives. Isolated and the F(d) table must share spawn. Labs 23-24 isolated R=6 vs pair-mid table was a leftover-lab hole; lab 25 stopped on isolated 2.26; lab 26 at 4× rays isolated 0.66 (lab 25 was noise). Origin-centered leftover in an LCM bath dies far like vacuum at λ=240 (lab 26, label 1/d², not a slam dunk) and at λ=24 (lab 27, classifier other). Lab 23's live-at-32 slow fall was pair-mid spawn, not gap τ. Leftover-in-LCM as 1/d is not earned. TVF flatten is not earned. Lab 28 two-coupling split is not earned: light on the same unpacked bath did drain / smear 0 / interval 1; leftover did not stay vacuum 1/d². Hex-disk leftover-vs-d is still at a stop. Light rides unpacked LCM. One optical depth still doing three jobs is a hole; leftover-packed n is not the light bath.
 
 Corrections to earlier sections in this file
 
@@ -120,4 +129,4 @@ Two-layer watch list: (1) leftover 1/d and 1/d², earned in vacuum on an extende
 
 Next physics
 
-Leftover-vs-d on the hex disk is at a stop. Lab 23's slow fall was pair-mid spawn, not gap τ. Do not scan λ looking for a flatten. SN dilation stays parked; do not add a clock well or c(E). No next lab until Glen says go.
+Leftover-vs-d on the hex disk is at a stop. Two-coupling split is not earned (lab 28). Lab 23's slow fall was pair-mid spawn, not gap τ. Do not scan λ looking for a flatten. SN dilation stays parked; do not add a clock well or c(E). No next lab until Glen says go.
